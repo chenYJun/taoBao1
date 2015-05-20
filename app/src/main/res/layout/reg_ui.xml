@@ -18,8 +18,8 @@
         android:gravity="center"
         >
         <TextView
-            android:text="@string/myTaoBao"
-            android:layout_width="wrap_content"
+            android:text="用户注册"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textSize="28sp"
             />
@@ -32,12 +32,11 @@
         android:layout_height="fill_parent"
         android:orientation="horizontal"
         android:layout_weight="1"
-        android:padding="15dp"
         >
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/name"
+            android:text="注册e"
             android:layout_weight="7"
             />
         <EditText
@@ -46,9 +45,11 @@
             android:hint="@string/Editname"
             android:textSize="28sp"
             android:layout_weight="1"
+            android:id="@+id/edtUserId"
             />
     </LinearLayout>
 
+    <!-- 密码 -->
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         tools:context=".MainActivity"
@@ -56,7 +57,7 @@
         android:layout_height="fill_parent"
         android:orientation="horizontal"
         android:layout_weight="1"
-        android:padding="15dp"
+
         >
         <TextView
             android:layout_width="fill_parent"
@@ -70,6 +71,41 @@
             android:hint="@string/Editpass"
             android:textSize="28sp"
             android:layout_weight="1"
+            android:id="@+id/edtPassWord"
+            />
+    </LinearLayout>
+<!-- 验证码    -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:context=".MainActivity"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="horizontal"
+        android:layout_weight="1"
+
+        >
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="验证码"
+            android:layout_weight="3"
+            />
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="验证码"
+            android:textSize="28sp"
+            android:layout_weight="2"
+            android:id="@+id/edtChkCode"
+            />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:textColor="#0000ff"
+            android:textStyle="bold|italic"
+            android:id="@+id/txtChkcode"
             />
     </LinearLayout>
 
@@ -79,18 +115,21 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="horizontal"
-        android:gravity="center_horizontal"
         android:layout_weight="1"
         >
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/login"
+            android:text="注册"
+            android:layout_weight="1"
+            android:id="@+id/btnReg"
             />
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/exit"
+            android:layout_weight="1"
+            android:id="@+id/btnEx"
             />
     </LinearLayout>
 </LinearLayout>

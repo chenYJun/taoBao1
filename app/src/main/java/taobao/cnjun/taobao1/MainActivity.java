@@ -149,16 +149,34 @@ public class MainActivity extends ActionBarActivity {
         Button btnReg = (Button) v.findViewById(R.id.btnReg);
         final EditText editUserId = (EditText) v.findViewById(R.id.edtUserId);
         final EditText editPassWord = (EditText) v.findViewById(R.id.edtPassWord);
+        final TextView txtChkCode = (TextView) v.findViewById(R.id.txtChkcode);
+        final EditText editChkCode = (EditText) v.findViewById(R.id.edtChkCode);
         btnReg.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+                if (!editChkCode.getText().toString().equals(txtChkCode.getText().toString())) {
+                    Tools.showMessage(context, "验证验输入错误，请重新输入!");
+                    String chkCode = getCheckCode();
+                    txtChkCode.setText(chkCode);
+                    return;
+                }
+
                 User user = new User(editUserId.getText().toString(), editPassWord.getText().toString());
                 User result = userManager.Register(user);
                 if (result != null) {
                     dismissDialog(DIALOG_REG);
                 } else {
                     Tools.showMessage(context, "注册用户失败!");
+                    String chkCode = getCheckCode();
+                    txtChkCode.setText(chkCode);
                 }
+            }
+        });
+
+        txtChkCode.setOnClickListener(new View.OnClickListener() {//每次点击验证验刷新
+            @Override
+            public void onClick(View v) {
+                txtChkCode.setText(getCheckCode());
             }
         });
 

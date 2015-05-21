@@ -14,7 +14,7 @@ public class ProductManager {
     public ProductManager(){
         dao = new ProductService();
     }
-    public List<Product> GetProductByPager(int pageIndex, int pageSize) {
+    public List<Product> getProductByPager(int pageIndex, int pageSize) {
         return this.dao.getByPager(pageIndex, pageSize);
     }
     public List<Product> getProductByName(String name) {
@@ -32,7 +32,7 @@ public class ProductManager {
         }
 
     }
-    public boolean AddProduct(int id, String name, double unitPrice, int photo, int categoryId, String note)
+    public boolean addProduct(int id, String name, double unitPrice, int photo, int categoryId, String note)
             throws Exception{
         Product p = new Product(id, name, unitPrice, photo, categoryId, note);
         return this.AddProduct(p);

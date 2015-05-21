@@ -43,7 +43,7 @@ public class MainActivity extends ActionBarActivity {
         switch (flag) {
             case DIALOG_LOGIN:
                 View v = inflater.inflate(R.layout.login_ui, null);
-                builder.setTitle("登陆").setIcon(R.drawable.icon).setView(v);
+                builder.setTitle("登陆").setIcon(R.drawable.icon2).setView(v);
 
                 break;
             default:

@@ -9,14 +9,19 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import java.util.List;
 
 import activity.Tools;
+import manager.ProductManager;
 import manager.UserManager;
+import model.Product;
 import model.User;
 
 
@@ -31,6 +36,14 @@ public class MainActivity extends ActionBarActivity {
     private static final int DIALOG_LOGIN = 1; //代表登陆对话框
     private static final int DIALOG_REG = 0; //注册
 
+    //定义关于LIstView相关常量
+    private static final int PAGESIZE = 5; //每次取几条记录
+
+    private int PageIndex = 0; //用于保存当前是第几页,0代表第一页
+    private ProductManager productManager;
+    private List<Product> products = null;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,12 +53,24 @@ public class MainActivity extends ActionBarActivity {
     }
 
     /**
-     * 初始化系统
+     * 初始化系统数据
      */
     private void init() {
         context = this;
         this.inflater = LayoutInflater.from(this);
         userManager = new UserManager();
+        productManager = new ProductManager();
+
+    }
+
+    /**
+     * 初始化系统界面
+     */
+    private void initMainUi() {
+        products = productManager.getProductByPager(PageIndex, PAGESIZE);
+        setContentView(R.layout.activity_main);
+        MyAdapter adapter = new MyAdapter(context);
+
     }
 
     @Override
@@ -70,7 +95,7 @@ public class MainActivity extends ActionBarActivity {
                 createRegDialog(builder);
                 break;
             case DIALOG_EXIT:
-                builder.setTitle("警告").setIcon(R.drawable.icon).setMessage("您确定要退出系统吗？")
+                builder.setTitle("警告").setIcon(R.drawable.icon2).setMessage("您确定要退出系统吗？")
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -83,9 +108,11 @@ public class MainActivity extends ActionBarActivity {
         return builder.create();
     }
 
+
+
     private void createLoginDialog(AlertDialog.Builder builder) {
         View v = inflater.inflate(R.layout.login_ui, null);
-        builder.setTitle("登陆").setIcon(R.drawable.icon).setView(v);
+        builder.setTitle("登陆").setIcon(R.drawable.icon2).setView(v);
         Button btnLog = (Button) v.findViewById(R.id.btnLog);
         final EditText editUserId = (EditText) v.findViewById(R.id.edtUserId);
         final EditText editPassWord = (EditText) v.findViewById(R.id.edtPassWord);
@@ -95,7 +122,7 @@ public class MainActivity extends ActionBarActivity {
                 LoginUser = userManager.Login(editUserId.getText().toString(), editPassWord.getText().toString());
                 if (LoginUser != null) {
                     dismissDialog(DIALOG_LOGIN);
-                    setContentView(R.layout.activity_main);
+                    initMainUi();
                 } else {
                     Tools.showMessage(context, "账号或密码有误，登陆失败");
                 }
@@ -118,6 +145,8 @@ public class MainActivity extends ActionBarActivity {
             }
         });
     }
+
+
 
     private String getCheckCode(){
         String strInt = "";
@@ -145,7 +174,7 @@ public class MainActivity extends ActionBarActivity {
      */
     private void createRegDialog(AlertDialog.Builder builder) {
         View v = inflater.inflate(R.layout.reg_ui, null);
-        builder.setTitle("注册").setIcon(R.drawable.icon).setView(v);
+        builder.setTitle("注册").setIcon(R.drawable.icon2).setView(v);
         Button btnReg = (Button) v.findViewById(R.id.btnReg);
         final EditText editUserId = (EditText) v.findViewById(R.id.edtUserId);
         final EditText editPassWord = (EditText) v.findViewById(R.id.edtPassWord);
@@ -200,5 +229,41 @@ public class MainActivity extends ActionBarActivity {
         return false;
     }
 
+
+    class MyAdapter extends BaseAdapter {
+        private Context context;
+        public MyAdapter(Context context) {
+            this.context = context;
+        }
+
+        @Override
+        public int getCount() {
+            return products.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return products.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return products.get(position).getId();
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            if (convertView == null) {
+                convertView = inflater.inflate(R.layout.productitem, parent, false);
+            }
+            ImageView imgPhot = (ImageView) convertView.findViewById(R.id.imagePhoto);
+            imgPhot.setImageResource(R.drawable.p2);
+            TextView txtName = (TextView) convertView.findViewById(R.id.txtName);
+            TextView txtPrice = (TextView) convertView.findViewById(R.id.txtPrice);
+            txtName.setText(products.get(position).getName().toString());
+            txtPrice.setText(String.valueOf(products.get(position).getUnitPrice()));
+            return convertView;
+        }
+    }
 
 }

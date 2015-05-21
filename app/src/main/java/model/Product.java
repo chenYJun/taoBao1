@@ -1,5 +1,7 @@
 package model;
 
+import taobao.cnjun.taobao1.R;
+
 /**
  * 产品
  * Created by chen on 15-5-13.
@@ -64,7 +66,33 @@ public class Product {
     }
 
     public int getPhoto() {
-        return photo;
+        if (this.id == 1) {
+            return R.drawable.p1;
+        } else if (this.id == 2) {
+            return R.drawable.p2;
+        } else if (this.id == 3) {
+            return R.drawable.p3;
+        } else if (this.id == 4) {
+            return R.drawable.p4;
+        } else if (this.id == 5) {
+            return R.drawable.p5;
+        } else if (this.id == 6) {
+            return R.drawable.p6;
+        } else if (this.id == 7) {
+            return R.drawable.p7;
+        } else if (this.id == 8) {
+            return R.drawable.p8;
+        } else if (this.id == 9) {
+            return R.drawable.p9;
+        } else if (this.id == 10) {
+            return R.drawable.p10;
+        } else if (this.id == 11) {
+            return R.drawable.p11;
+        } else if (this.id == 12){
+            return R.drawable.p12;
+        }
+        return R.drawable.p1;
+
     }
 
     public void setPhoto(int photo) {
